@@ -15,97 +15,77 @@ const itemsUp = [".light1", ".light2", ".light3", ".light9", ".light10", ".light
 forEach(e => animateWithRandomNumber(e, 1080, -1080));
 
 jQuery(function ($) {
-  //normal menu
-  $(".l1").click(function () {
-    $('html, body').animate({
-      scrollTop: $("#OFERTA").offset().top
-    }, 500);
-  });
-  $(".l2").click(function () {
-    $('html, body').animate({
-      scrollTop: $("#WHO").offset().top
-    }, 500);
-  });
-  $(".l3").click(function () {
-    $('html, body').animate({
-      scrollTop: $("#PORTFOLIO").offset().top
-    }, 500);
-  });
-  $(".l4").click(function () {
-    $('html, body').animate({
-      scrollTop: $("#KONTAKT").offset().top
-    }, 500);
-  });
-
   //UP
   $(".scrollup").click(function (e) {
-    e.preventDefault();
-    $('html, body').animate({
-      scrollTop: $("body").offset().top
-    }, 1000);
+      e.preventDefault();
+      $('html, body').animate({
+          scrollTop: $("body").offset().top
+      }, 1000);
   });
 
+  "use strict"; // Start of use strict
+
+  // Smooth scrolling using jQuery easing
+  $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      if (target.length) {
+        $('html, body').animate({
+          scrollTop: (target.offset().top - 70)
+        }, 1000, "easeInOutExpo");
+        return false;
+      }
+    }
+  });
+
+  // Closes responsive menu when a scroll trigger link is clicked
+  $('.js-scroll-trigger').click(function () {
+    $('.navbar-collapse').collapse('hide');
+  });
+
+  // Activate scrollspy to add active class to navbar items on scroll
+  $('body').scrollspy({
+    target: '#mainNav',
+    offset: 100
+  });
+
+  const logo = document.querySelector("#logo-nav");
+  const logoSrc = ['IMG/logo.png','IMG/logo1.png']
+
+  const changeLogo = (logo , source) => {
+      logo.src=`${source}`
+  }
+
+  // Collapse Navbar
+  var navbarCollapse = function () {
+    if ($("#mainNav").offset().top > 80) {
+      $("#mainNav").addClass("navbar-shrink");
+      changeLogo(logo , logoSrc[0]);
+      
+    } else {
+      $("#mainNav").removeClass("navbar-shrink");
+      changeLogo(logo , logoSrc[1]);
+    }
+  };
+  // Collapse now if page is not at top
+  navbarCollapse();
+  // Collapse the navbar when page is scrolled
+  $(window).scroll(navbarCollapse);
 });
 
-function AnimateCharts() {
-  $('#chart1__circle').addClass('circle-chart__circle');
-  $('#chart1__info').addClass('circle-chart__info');
-
-  $('#chart2__circle').addClass('circle-chart__circle');
-  $('#chart2__info').addClass('circle-chart__info');
-
-  $('#chart3__circle').addClass('circle-chart__circle');
-  $('#chart3__info').addClass('circle-chart__info');
-}
-
-function isScrolledIntoView(elem) {
-  var docViewTop = $(window).scrollTop();
-  var docViewBottom = docViewTop + $(window).height();
-
-  var elemTop = $(elem).offset().top;
-  var elemBottom = elemTop + $(elem).height();
-
-  return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-}
-
-//pokaż podczas przewijania
+//pokaż scrollup podczas przewijania
 $(window).scroll(function () {
   if ($(this).scrollTop() > 300) $('.scrollup').fadeIn();
   else $('.scrollup').fadeOut();
-
-  if (isScrolledIntoView('#chart1__circle') == true) {
-    AnimateCharts();
-  }
 });
 
+// 100% wysokości pierwszy element 
 $(document).ready(function () {
 
   $(".right").css("min-height", $(window).height());
 
   $(window).resize(function () {
-    $(".right").css("min-height", $(window).height());
+      $(".right").css("min-height", $(window).height());
   });
-
-
-  $('#carousel-example-generic').carousel({
-    interval: 5000,
-    pause: "hover"
-  });
-
-  var touchSensitivity = 5;
-  $(".carousel").on("touchstart", function (event) {
-    var xClick = event.originalEvent.touches[0].pageX;
-    $(this).one("touchmove", function (event) {
-      var xMove = event.originalEvent.touches[0].pageX;
-      if (Math.floor(xClick - xMove) > touchSensitivity) {
-        $(this).carousel('next');
-      } else if (Math.floor(xClick - xMove) < -(touchSensitivity)) {
-        $(this).carousel('prev');
-      }
-    });
-    $(".carousel").on("touchend", function () {
-      $(this).off("touchmove");
-    });
-  });
-
 });
