@@ -99,6 +99,10 @@ a:active {
   font-size: 3.5rem;
 }
 
+.img-logo{
+  width: 20%;
+}
+
 /* Navigation section */
 
 #mainNav {
@@ -196,3 +200,4 @@ a:active {
       border-bottom: 0.25rem solid #f73f48;
   }
 }
+

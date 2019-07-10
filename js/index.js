@@ -51,7 +51,7 @@ jQuery(function ($) {
   });
 
   const logo = document.querySelector("#logo-nav");
-  const logoSrc = ['IMG/logo.png','IMG/logo1.png']
+  const logoSrc = ['IMG/logoAlt.png','IMG/logo.png']
 
   const changeLogo = (logo , source) => {
       logo.src=`${source}`
